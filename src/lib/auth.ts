@@ -11,7 +11,7 @@ export const authOptions: AuthOptions = {
     })
   ],
   pages: {
-    signIn: '/api/auth/signin'
+    signIn: '/auth/signin'
   },
   callbacks: {
     async jwt ({ token, account }) {

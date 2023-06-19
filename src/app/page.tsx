@@ -1,8 +1,7 @@
 'use client'
-
-import styles from './page.module.css'
 import { signIn, signOut, useSession } from 'next-auth/react'
 import React from 'react'
+import LoadingLayout from '../layouts/loading/loading.layout'
 
 export default function Home () {
   let component = (<></>)
@@ -15,14 +14,15 @@ export default function Home () {
   })
 
   if (status === 'loading') {
-    return 'Loading or not authenticated...'
+    // Circular LoadingComponent
+    component = (<p>Loading or not authenticated...</p>)
   }
 
   if (session) {
+    // Progress bar LoadingFromApi component
     component = (
       <p>
-        Active user:&nbsp;
-        <code className={styles.code}>Hi! {session?.user?.name}</code>
+        <p>Hi! {session?.user?.name}</p>
         <button onClick={() => {
           signOut()
         }}
@@ -33,8 +33,8 @@ export default function Home () {
   }
 
   return (
-    <main className={styles.main}>
+    <LoadingLayout type=''>
       {component}
-    </main>
+    </LoadingLayout>
   )
 }

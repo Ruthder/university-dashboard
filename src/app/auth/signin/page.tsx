@@ -5,6 +5,7 @@ import { ClientSafeProvider, getProviders, signIn as signin, useSession } from '
 import { useEffect, useState } from 'react'
 
 import { useRouter } from 'next/navigation'
+import LoadingLayout from '@/layouts/loading/loading.layout'
 
 const signIn: NextPage = () => {
   const [providers, setProviders] = useState<Record<string, ClientSafeProvider>>({})
@@ -23,18 +24,16 @@ const signIn: NextPage = () => {
     if (status === 'authenticated') {
       router.push('/')
     }
-  // eslint-disable-next-line react-hooks/exhaustive-deps
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [status])
   return (
-    <>
+    <LoadingLayout>
       {providers && !!Object.keys(providers).length && Object.values(providers).map((provider: any) => (
-        <div key={provider.name}>
-          <button onClick={() => signin(provider.id)}>
-            Sign in with {provider.name}
-          </button>
-        </div>
+        <button key={provider.name} onClick={() => signin(provider.id)}>
+          Sign in with {provider.name}
+        </button>
       ))}
-    </>
+    </LoadingLayout>
   )
 }
 
