@@ -1,35 +1,27 @@
 'use client'
-import { signIn, signOut, useSession } from 'next-auth/react'
+import { useSession } from 'next-auth/react'
 import React from 'react'
 import LoadingLayout from '../layouts/loading/loading.layout'
+import { useRouter } from 'next/navigation'
 
 export default function Home () {
   let component = (<></>)
 
-  const { data: session, status } = useSession({
-    required: true,
-    onUnauthenticated () {
-      signIn()
-    }
-  })
+  const router = useRouter()
+  const { data: session, status } = useSession()
+
+  if (status === 'unauthenticated') {
+    router.push('/auth/signin')
+  }
 
   if (status === 'loading') {
     // Circular LoadingComponent
-    component = (<p>Loading or not authenticated...</p>)
+    component = (<>Loading or not authenticated...</>)
   }
 
   if (session) {
     // Progress bar LoadingFromApi component
-    component = (
-      <p>
-        <p>Hi! {session?.user?.name}</p>
-        <button onClick={() => {
-          signOut()
-        }}
-        >logOut
-        </button>
-      </p>
-    )
+    router.push('/dashboard')
   }
 
   return (
