@@ -27,7 +27,7 @@ const signIn: NextPage = () => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [status])
   return (
-    <LoadingLayout>
+    <LoadingLayout type=''>
       {providers && !!Object.keys(providers).length && Object.values(providers).map((provider: any) => (
         <button key={provider.name} onClick={() => signin(provider.id)}>
           Sign in with {provider.name}
