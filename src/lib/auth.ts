@@ -10,6 +10,9 @@ export const authOptions: AuthOptions = {
       authorization: { params: { scope: 'openid profile user.Read email' } }
     })
   ],
+  pages: {
+    signIn: '/auth/signin'
+  },
   callbacks: {
     async jwt ({ token, account }) {
       // IMPORTANT: Persist the access_token to the token right after sign in
